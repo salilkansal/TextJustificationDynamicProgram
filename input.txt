@@ -1,4 +1,4 @@
-Your program should print its output to the console.
+Output Format: Your program should print its output to the console.
 In the first line of output, print the total penalty (sum of cubes of
 the number of spaces added in each line).  The second line of output is blank.
 Starting from the third line of the output, print the input words,

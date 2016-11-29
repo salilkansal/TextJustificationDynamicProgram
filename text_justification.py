@@ -13,7 +13,7 @@ Dynamic Program
 """
 import sys
 
-EXTRA_SPACES_SYMBOL = ' '
+EXTRA_SPACES_SYMBOL = '+'
 DEFAULT_LINE_WIDTH = 80
 
 # reading the input source
@@ -92,42 +92,51 @@ def get_solution(aux_array, n):
     return start_lines
 
 
+def distribute_extra_spaces(line, positions, extra_spaces):
+    interval = positions / extra_spaces
+    index = interval
+    while extra_spaces > 0:
+        line[index] = EXTRA_SPACES_SYMBOL + line[index]
+        index += interval
+        extra_spaces -= 1
+    return line
+
+
 def put_extra_spaces(line, start, end):
     extra_spaces = M - length_of_sentence(start, end)
     positions = len(line) - 1
+    # Nothing to do as no extra spaces are needed
+    if extra_spaces == 0 or positions == 0:
+        return line
 
     # No formatting for last line
     if end == len(word_lengths_preprocess) - 1:
         return line
 
     # If the number of spaces to add are more than the number of positions available
-    if positions < extra_spaces:
-        num_of_spaces_on_every_position = extra_spaces / positions
-        line_output = []
-        for index, word in enumerate(line):
-            if index != 0:
-                word_with_spaces = EXTRA_SPACES_SYMBOL * num_of_spaces_on_every_position + word
-                line_output.append(word_with_spaces)
-            else:
-                line_output.append(word)
-            return line_output
+    if positions <= extra_spaces:
+        line_output = put_same_extra_spaces_on_every_position(line, positions, extra_spaces)
+        extra_spaces_left = extra_spaces % positions
+        if extra_spaces_left > 0:
+            line_output = distribute_extra_spaces(line_output, positions, extra_spaces_left)
+        return line_output
     # Else case when number of extra spaces are less than the number of positions available
-    elif extra_spaces != 0:
-        interval = positions / extra_spaces
-        extra_positions = positions % extra_spaces
-
-        pos = interval
-        while pos <= positions:
-            line[pos] = EXTRA_SPACES_SYMBOL + line[pos]
-            pos += interval
-            if extra_positions > 0:
-                extra_positions -= 1
-                pos += 1
-
-        return line
     else:
-        return line
+        line_output = distribute_extra_spaces(line, positions, extra_spaces)
+        return line_output
         # distribute the spaces evenly
+
+
+def put_same_extra_spaces_on_every_position(line, positions, extra_spaces):
+    num_of_spaces_on_every_position = extra_spaces / positions
+    line_output = []
+    for index, word in enumerate(line):
+        if index != 0:
+            word_with_spaces = EXTRA_SPACES_SYMBOL * num_of_spaces_on_every_position + word
+            line_output.append(word_with_spaces)
+        else:
+            line_output.append(word)
+    return line_output
 
 
 output = (get_solution(aux, len(input_words) - 1))

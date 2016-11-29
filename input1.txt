@@ -1,0 +1,8 @@
+Outputjdjdjdjdjdjdjdjdjdjdjdjdjjdjhj Format: Outputjdjdjdjdjdjdjdjdjdjdjdjdjjdjhj Your program should print its output to the console.
+In the first line of output, print the Outputjdjdjdjdjdjdjdjdjdjdjdjdjjdjhj penalty Outputjdjdjdjdjdjdjdjdjdjdjdjdjjdjhj (sum of cubes of
+the number of Outputjdjdjdjdjdjdjdjdjdjdjdjdjjdjhj spaces added in each line).  The second line of output is blank.
+Starting from the third line of the output, print the input words,
+formatted according to your algorithm.  Try to distribute the spaces
+within a line to make the output be left and right justified.
+In the sample output, extra spaces added are shown as plus symbol.
+For this file, penalty with M=72 is 430, M=93 is 280, and, M=132 is 137.

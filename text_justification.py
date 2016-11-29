@@ -1,30 +1,42 @@
 #!/usr/bin/python
 
+"""
+Programming Project
+Design and Analysis of Algorithms
+CS 6363
+
+Printing Neatly
+CLRS Pg 405
+
+Dynamic Program
+
+"""
 import sys
 
 EXTRA_SPACES_SYMBOL = ' '
+DEFAULT_LINE_WIDTH = 80
 
+# reading the input source
 if len(sys.argv) > 1:
-    file = open(sys.argv[1], 'r')
-    source = file.read()
-    file.close()
+    input_file = open(sys.argv[1], 'r')
+    source = input_file.read()
+    input_file.close()
 else:
     source = raw_input()
 
+# if there is second argument then set the line width to that. else the max line width is default
 if len(sys.argv) > 2:
     M = int(sys.argv[2])
 else:
-    M = 80
+    M = DEFAULT_LINE_WIDTH
 # print source.split()
+
 word_lengths_preprocess = []
 count = 0
 
-# print source
+# making the 0th index of source to be empty to be consistent with the algorithm
 input_words = [""] + source.split()
-# print input_words
 word_lengths = map(lambda x: len(x), input_words)
-penalty = 0
-
 
 # Pre-processing the length of words so that the sentence_length can be calculated in constant time
 for word in input_words:
@@ -65,10 +77,7 @@ for j in range(1, len(input_words)):
             aux[j] = i
 
 
-# print text_justification
-# print aux
-
-
+# This method uses aux array to print the final solution. It return it as a list of sentences
 def get_solution(aux_array, n):
     if aux_array[n] == 1:
         start_lines = []
@@ -91,8 +100,7 @@ def put_extra_spaces(line, start, end):
     if end == len(word_lengths_preprocess) - 1:
         return line
 
-    global penalty
-    penalty += extra_spaces ** 3
+    # If the number of spaces to add are more than the number of positions available
     if positions < extra_spaces:
         num_of_spaces_on_every_position = extra_spaces / positions
         line_output = []
@@ -103,6 +111,7 @@ def put_extra_spaces(line, start, end):
             else:
                 line_output.append(word)
             return line_output
+    # Else case when number of extra spaces are less than the number of positions available
     elif extra_spaces != 0:
         interval = positions / extra_spaces
         extra_positions = positions % extra_spaces
@@ -124,6 +133,7 @@ def put_extra_spaces(line, start, end):
 output = (get_solution(aux, len(input_words) - 1))
 # print output
 
+penalty = text_justification[len(word_lengths) - 1]
 print penalty
 print
 
